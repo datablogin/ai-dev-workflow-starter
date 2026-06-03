@@ -11,6 +11,7 @@ Read first:
 - README.md
 - AGENTS.md
 - docs/standalone-analyst-ai-development-guide.md
+- prompts/agents-builder-interview.md
 - prompts/codex-bootstrap-prompts.md
 
 Then inspect:
@@ -48,6 +49,10 @@ If situation 3:
 - Ask me which repository should receive the workflow.
 
 If situation 2, continue with setup.
+
+If AGENTS.md is missing, generic, copied from the starter kit without project
+adaptation, or stale, stop and recommend running
+prompts/agents-builder-interview.md before continuing.
 
 Setup goals:
 - Make Codex able to read repo instructions from AGENTS.md.

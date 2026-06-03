@@ -24,9 +24,9 @@ shape-work -> tdd -> implement -> polish -> review-pr -> human approval -> retro
 ## How To Use This Kit
 
 1. Copy these files into the root of a project repository.
-2. Edit `AGENTS.md` so it matches that project.
-3. Start Codex from the repository root.
-4. Start with `prompts/new-developer-environment-setup.md`.
+2. Start Codex from the repository root.
+3. Run `prompts/agents-builder-interview.md` if `AGENTS.md` is missing or generic.
+4. Run `prompts/new-developer-environment-setup.md`.
 5. Use `prompts/codex-bootstrap-prompts.md` for the first planning and delivery pass.
 
 ## Minimum Tools

@@ -3,6 +3,9 @@
 Use these prompts from the repository root after copying this starter kit into a
 project.
 
+If `AGENTS.md` is missing, generic, or stale, run
+`prompts/agents-builder-interview.md` before the prompts below.
+
 ## Prompt 1: Orientation
 
 ```text
