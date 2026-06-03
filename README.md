@@ -26,8 +26,8 @@ shape-work -> tdd -> implement -> polish -> review-pr -> human approval -> retro
 1. Copy these files into the root of a project repository.
 2. Edit `AGENTS.md` so it matches that project.
 3. Start Codex from the repository root.
-4. Ask Codex to read `AGENTS.md` and `docs/standalone-analyst-ai-development-guide.md`.
-5. Use `prompts/codex-bootstrap-prompts.md` to run the first setup and planning pass.
+4. Start with `prompts/new-developer-environment-setup.md`.
+5. Use `prompts/codex-bootstrap-prompts.md` for the first planning and delivery pass.
 
 ## Minimum Tools
 
