@@ -7,7 +7,7 @@ repository or internal process.
 The working style is simple:
 
 ```text
-shape-work -> tdd -> implement -> polish -> review-pr -> human approval -> retro-pr
+shape-work -> dispatch-wave (if useful) -> tdd -> implement -> polish -> review-pr -> human approval -> retro-pr
 ```
 
 For non-code analysis work, use the same loop with lighter gates:
@@ -75,7 +75,26 @@ If the work is an analysis deliverable, the scorecard should include fact-check
 requirements: source rows, formulas, date ranges, and claims that must be
 verified.
 
-## Phase 3: Implement With Tests
+## Phase 3: Dispatch A Wave, If Useful
+
+Use dispatch-wave when the shaped work might need multiple agents, branches,
+PRs, or sessions.
+
+Dispatch-wave does not launch agents in this starter kit. It creates a
+brief-only manifest:
+
+- artifact check
+- assignment table
+- file overlap check
+- dependency check
+- serial vs parallel recommendation
+- paste-ready launch prompts
+- human decisions needed before launch
+
+If there is only one assignment, dispatch-wave should say no wave is needed and
+recommend running that assignment directly.
+
+## Phase 4: Implement With Tests
 
 For code, use test-driven development when behavior changes:
 
@@ -91,7 +110,7 @@ For analysis, use check-driven development:
 3. Produce the analysis.
 4. Verify every quantitative claim before delivery.
 
-## Phase 4: Polish
+## Phase 5: Polish
 
 Polish before review. The agent should:
 
@@ -105,7 +124,7 @@ Polish before review. The agent should:
 Polish is not vanity. It prevents review tools and humans from spending time on
 avoidable problems.
 
-## Phase 5: Review
+## Phase 6: Review
 
 If the project uses GitHub, open a pull request and run review-pr.
 
@@ -121,7 +140,7 @@ The review should check:
 If there is no PR system, use a written review checklist and attach it to the
 work notes.
 
-## Phase 6: Retro
+## Phase 7: Retro
 
 After delivery, run retro-pr or write a short retro.
 

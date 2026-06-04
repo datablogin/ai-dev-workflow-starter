@@ -95,6 +95,7 @@ Implementation steps for situation 2:
    - Confirm AGENTS.md exists and is project-specific.
    - Confirm .agents/skills contains:
      - shape-work
+     - dispatch-wave
      - tdd
      - polish
      - review-pr

@@ -18,7 +18,7 @@ workflow.
 The workflow is:
 
 ```text
-shape-work -> tdd -> implement -> polish -> review-pr -> human approval -> retro-pr
+shape-work -> dispatch-wave (if useful) -> tdd -> implement -> polish -> review-pr -> human approval -> retro-pr
 ```
 
 ## How To Use This Kit

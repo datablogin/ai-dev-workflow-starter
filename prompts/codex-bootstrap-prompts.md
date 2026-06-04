@@ -72,7 +72,43 @@ Report:
 - risks or assumptions that need human confirmation
 ```
 
-## Prompt 4: Implement One Phase
+## Prompt 4: Dispatch A Brief-Only Wave
+
+```text
+Use the dispatch-wave skill in brief-only mode.
+
+Read:
+- AGENTS.md
+- Plan: <path>
+- Scorecard: <path>
+- Prompt pack: <path>
+
+Goal:
+Create a dispatch manifest before any implementation starts.
+
+Constraints:
+- Do not create branches.
+- Do not create worktrees.
+- Do not launch background agents.
+- Do not push commits.
+- Do not open PRs.
+- Create only a brief-only dispatch manifest under thoughts/shared/handoffs/.
+
+Check:
+- whether all assignments are specific enough to launch
+- whether any assignments overlap on files/modules
+- whether any assignments depend on each other
+- whether this should be NO_WAVE, SERIAL, PARALLEL, or STACKED
+
+Report:
+- manifest path
+- execution recommendation
+- ready assignments
+- blocked assignments
+- human decisions needed
+```
+
+## Prompt 5: Implement One Phase
 
 ```text
 Read AGENTS.md and the following artifacts:
@@ -102,7 +138,7 @@ Report:
 - remaining risks
 ```
 
-## Prompt 5: Review A PR Or Diff
+## Prompt 6: Review A PR Or Diff
 
 ```text
 Use the review-pr skill.
@@ -123,7 +159,7 @@ Fix blocking issues if they are in scope. Report non-blocking issues with a
 recommendation. Do not merge.
 ```
 
-## Prompt 6: Retro After Delivery
+## Prompt 7: Retro After Delivery
 
 ```text
 Use the retro-pr skill.
