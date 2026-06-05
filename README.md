@@ -12,6 +12,7 @@ workflow.
 - A narrative guide for working with AI agents.
 - A repo-level `AGENTS.md` operating contract.
 - Codex-native skills under `.agents/skills/`.
+- A Cursor rule under `.cursor/rules/`.
 - Planning templates under `thoughts/shared/templates/`.
 - Paste-ready prompts under `prompts/`.
 
@@ -39,3 +40,19 @@ shape-work -> dispatch-wave (if useful) -> tdd -> implement -> polish -> review-
 
 If you do not use GitHub PRs, keep the same review step but adapt it to your
 hosted review tool or a written human review checklist.
+
+## Skill Source Of Truth
+
+Use `~/.agents/skills/` as the canonical user-level skill source. Other clients
+can point to those same folders instead of keeping duplicate copies.
+
+Recommended local compatibility links:
+
+```bash
+ln -s ~/.agents/skills/shape-work ~/.claude/skills/shape-work
+ln -s ~/.agents/skills/dispatch-wave ~/.claude/skills/dispatch-wave
+ln -s ~/.agents/skills/retro-pr ~/.claude/skills/retro-pr
+```
+
+For Cursor, keep rules lightweight: read `AGENTS.md`, follow the workflow, and
+refer to `~/.agents/skills/<skill-name>/SKILL.md` for canonical skill details.

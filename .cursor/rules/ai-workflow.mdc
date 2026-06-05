@@ -1,0 +1,24 @@
+---
+description: AI development workflow, planning artifacts, and review gates
+alwaysApply: true
+---
+
+Read `AGENTS.md` before changing files. It is the repository operating
+contract for AI agents.
+
+Use this workflow:
+
+```text
+shape-work -> dispatch-wave when useful -> tdd -> implement -> polish -> review-pr -> human approval -> retro-pr
+```
+
+Durable planning artifacts live under `thoughts/shared/`.
+
+The canonical reusable skill instructions live in:
+
+```text
+~/.agents/skills/<skill-name>/SKILL.md
+```
+
+For repo-specific behavior, prefer updating `AGENTS.md` or adding a
+repo-local skill under `.agents/skills/`.
