@@ -19,7 +19,7 @@ workflow.
 The workflow is:
 
 ```text
-shape-work -> dispatch-wave (if useful) -> tdd -> implement -> polish -> review-pr -> human approval -> retro-pr
+shape-work -> review-plan -> human approval -> dispatch-wave (if useful) -> tdd -> implement -> polish -> review-pr -> retro-pr
 ```
 
 ## How To Use This Kit
@@ -50,6 +50,7 @@ Recommended local compatibility links:
 
 ```bash
 ln -s ~/.agents/skills/shape-work ~/.claude/skills/shape-work
+ln -s ~/.agents/skills/review-plan ~/.claude/skills/review-plan
 ln -s ~/.agents/skills/dispatch-wave ~/.claude/skills/dispatch-wave
 ln -s ~/.agents/skills/retro-pr ~/.claude/skills/retro-pr
 ```

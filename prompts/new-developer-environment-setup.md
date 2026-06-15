@@ -83,7 +83,7 @@ Implementation steps for situation 2:
    - Run git remote -v.
    - Run gh auth status if GitHub CLI is installed.
    - List .agents/skills and confirm each skill has a SKILL.md.
-   - List thoughts/shared/templates and confirm the five templates exist.
+   - List thoughts/shared/templates and confirm the workflow templates exist.
 
 2. Project command discovery
    - Inspect package manager and CI files.
@@ -95,6 +95,7 @@ Implementation steps for situation 2:
    - Confirm AGENTS.md exists and is project-specific.
    - Confirm .agents/skills contains:
      - shape-work
+     - review-plan
      - dispatch-wave
      - tdd
      - polish

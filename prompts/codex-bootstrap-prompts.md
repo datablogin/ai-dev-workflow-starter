@@ -72,7 +72,43 @@ Report:
 - risks or assumptions that need human confirmation
 ```
 
-## Prompt 4: Dispatch A Brief-Only Wave
+## Prompt 4: Review The Plan
+
+```text
+Use the review-plan skill.
+
+Plan:
+- <path>
+
+Optional linked artifacts:
+- Research: <path>
+- Scorecard: <path>
+
+Goal:
+Stress-test this plan before human approval and dispatch.
+
+Constraints:
+- Do not implement.
+- Do not review code.
+- Use fresh reviewer context if this session authored or substantially edited
+  the plan.
+- Keep reviewers read-only.
+- Append the review verdict to the plan.
+- On SHIP, set plan status to reviewed.
+- Do not set status to approved. Approval is human-only.
+- Persist the updated plan to the durable branch and verify it reached the
+  remote.
+
+Report:
+- plan path and status
+- verdict: SHIP or REVISE
+- blocking findings
+- advisory findings
+- commit SHA
+- next human approval step
+```
+
+## Prompt 5: Dispatch A Brief-Only Wave
 
 ```text
 Use the dispatch-wave skill in brief-only mode.
@@ -87,28 +123,33 @@ Goal:
 Create a dispatch manifest before any implementation starts.
 
 Constraints:
+- The plan must already be reviewed and human-approved.
+- If plan frontmatter is not `status: approved`, stop and report that it is
+  not dispatchable yet.
 - Do not create branches.
 - Do not create worktrees.
 - Do not launch background agents.
-- Do not push commits.
 - Do not open PRs.
-- Create only a brief-only dispatch manifest under thoughts/shared/handoffs/.
+- Create and persist only a brief-only dispatch manifest under
+  thoughts/shared/handoffs/.
 
 Check:
 - whether all assignments are specific enough to launch
 - whether any assignments overlap on files/modules
 - whether any assignments depend on each other
+- whether every assignment has an independent verify-by check
 - whether this should be NO_WAVE, SERIAL, PARALLEL, or STACKED
 
 Report:
 - manifest path
+- commit SHA
 - execution recommendation
 - ready assignments
 - blocked assignments
 - human decisions needed
 ```
 
-## Prompt 5: Implement One Phase
+## Prompt 6: Implement One Phase
 
 ```text
 Read AGENTS.md and the following artifacts:
@@ -138,7 +179,7 @@ Report:
 - remaining risks
 ```
 
-## Prompt 6: Review A PR Or Diff
+## Prompt 7: Review A PR Or Diff
 
 ```text
 Use the review-pr skill.
@@ -159,7 +200,7 @@ Fix blocking issues if they are in scope. Report non-blocking issues with a
 recommendation. Do not merge.
 ```
 
-## Prompt 7: Retro After Delivery
+## Prompt 8: Retro After Delivery
 
 ```text
 Use the retro-pr skill.

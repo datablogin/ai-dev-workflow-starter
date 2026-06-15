@@ -7,7 +7,7 @@ repository or internal process.
 The working style is simple:
 
 ```text
-shape-work -> dispatch-wave (if useful) -> tdd -> implement -> polish -> review-pr -> human approval -> retro-pr
+shape-work -> review-plan -> human approval -> dispatch-wave (if useful) -> tdd -> implement -> polish -> review-pr -> retro-pr
 ```
 
 For non-code analysis work, use the same loop with lighter gates:
@@ -75,7 +75,24 @@ If the work is an analysis deliverable, the scorecard should include fact-check
 requirements: source rows, formulas, date ranges, and claims that must be
 verified.
 
-## Phase 3: Dispatch A Wave, If Useful
+## Phase 3: Review The Plan
+
+Use review-plan before dispatching shaped work, especially if the plan has sat
+for a while or will guide more than one agent/session.
+
+Review-plan stress-tests the plan through fresh lenses:
+
+- feasibility: do the named files, commands, services, and assumptions match
+  repo reality?
+- verifiability: can every success criterion be checked with a command, query,
+  CI job, or observable?
+- scope and risk: are rollback, privacy, migration, communication, and adjacent
+  regression risks covered?
+
+The review can move a plan from `draft` to `reviewed`. Only a human should move
+it to `approved`.
+
+## Phase 4: Dispatch A Wave, If Useful
 
 Use dispatch-wave when the shaped work might need multiple agents, branches,
 PRs, or sessions.
@@ -94,7 +111,7 @@ brief-only manifest:
 If there is only one assignment, dispatch-wave should say no wave is needed and
 recommend running that assignment directly.
 
-## Phase 4: Implement With Tests
+## Phase 5: Implement With Tests
 
 For code, use test-driven development when behavior changes:
 
@@ -110,7 +127,7 @@ For analysis, use check-driven development:
 3. Produce the analysis.
 4. Verify every quantitative claim before delivery.
 
-## Phase 5: Polish
+## Phase 6: Polish
 
 Polish before review. The agent should:
 
@@ -124,7 +141,7 @@ Polish before review. The agent should:
 Polish is not vanity. It prevents review tools and humans from spending time on
 avoidable problems.
 
-## Phase 6: Review
+## Phase 7: Review
 
 If the project uses GitHub, open a pull request and run review-pr.
 
@@ -140,7 +157,7 @@ The review should check:
 If there is no PR system, use a written review checklist and attach it to the
 work notes.
 
-## Phase 7: Retro
+## Phase 8: Retro
 
 After delivery, run retro-pr or write a short retro.
 
@@ -194,3 +211,6 @@ Goal:
 Do not implement yet. Produce research, a plan, a scorecard, and a prompt pack
 under thoughts/shared/. Keep it lightweight and suitable for a first pilot.
 ```
+
+After shape-work, run review-plan. If the verdict is `SHIP`, review the plan
+yourself and mark it `approved` before running dispatch-wave.
