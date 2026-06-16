@@ -9,7 +9,7 @@ contract for AI agents.
 Use this workflow:
 
 ```text
-shape-work -> review-plan -> human approval -> dispatch-wave when useful -> tdd -> implement -> polish -> review-pr -> retro-pr
+shape-work -> review-plan -> human approval -> dispatch-wave brief -> human launch approval -> dispatch-wave launch -> tdd -> implement -> polish -> review-pr -> retro-pr
 ```
 
 Durable planning artifacts live under `thoughts/shared/`.

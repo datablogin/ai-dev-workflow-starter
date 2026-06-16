@@ -19,7 +19,7 @@ workflow.
 The workflow is:
 
 ```text
-shape-work -> review-plan -> human approval -> dispatch-wave (if useful) -> tdd -> implement -> polish -> review-pr -> retro-pr
+shape-work -> review-plan -> human approval -> dispatch-wave brief -> human launch approval -> dispatch-wave launch -> tdd -> implement -> polish -> review-pr -> retro-pr
 ```
 
 ## How To Use This Kit

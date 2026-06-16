@@ -10,6 +10,8 @@ tags: []
 
 # Dispatch Wave: <Title>
 
+Mode: `brief`
+
 ## Approval Gate
 
 | Check | Required | Status | Notes |
@@ -98,3 +100,22 @@ Report:
 - Ready to launch now: <yes/no>
 - Recommended first assignment: <assignment>
 - Launch method: <orchestrator skill or direct paste>
+
+## Launch Approval
+
+Launch approval is separate from plan approval.
+
+| Field | Value |
+|---|---|
+| Approved assignments | <assignment names or pending> |
+| Approved harness | manual-paste / codex / claude-code / cursor / orchestrator / pending |
+| Approved by | <human/date or pending> |
+| Dry run first | yes/no |
+
+## Launch Status
+
+Fill this only after explicit launch approval.
+
+| Assignment | Harness | Status | Session/Branch/Prompt | Verify-By |
+|---|---|---|---|---|
+| <Name> | <harness> | PREPARED/LAUNCHED/SKIPPED | <label or prompt reference> | <command or URL> |

@@ -7,7 +7,7 @@ repository or internal process.
 The working style is simple:
 
 ```text
-shape-work -> review-plan -> human approval -> dispatch-wave (if useful) -> tdd -> implement -> polish -> review-pr -> retro-pr
+shape-work -> review-plan -> human approval -> dispatch-wave brief -> human launch approval -> dispatch-wave launch -> tdd -> implement -> polish -> review-pr -> retro-pr
 ```
 
 For non-code analysis work, use the same loop with lighter gates:
@@ -94,11 +94,12 @@ it to `approved`.
 
 ## Phase 4: Dispatch A Wave, If Useful
 
-Use dispatch-wave when the shaped work might need multiple agents, branches,
+Use dispatch-wave when the shaped work might need one or more agents, branches,
 PRs, or sessions.
 
-Dispatch-wave does not launch agents in this starter kit. It creates a
-brief-only manifest:
+Dispatch-wave has two modes.
+
+Brief mode is the default. It creates or updates a manifest:
 
 - artifact check
 - assignment table
@@ -107,6 +108,10 @@ brief-only manifest:
 - serial vs parallel recommendation
 - paste-ready launch prompts
 - human decisions needed before launch
+
+Launch mode is explicit. It only starts or prepares the assignments a human
+selects from an existing manifest. Plan approval means "this work is worth
+doing." Launch approval means "start these assignments now."
 
 If there is only one assignment, dispatch-wave should say no wave is needed and
 recommend running that assignment directly.

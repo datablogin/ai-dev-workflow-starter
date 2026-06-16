@@ -1,53 +1,77 @@
 ---
 name: dispatch-wave
-description: Convert approved shaped-work artifacts into a brief-only dispatch manifest. Use after review-plan and human approval when a plan or prompt pack may require multiple agents, phases, branches, or careful sequencing. Validates readiness, file overlap, dependencies, and per-agent prompts without launching agents or creating branches. Refuses plans that are not human-approved.
+description: Convert approved shaped-work artifacts into a dispatch manifest, then optionally launch explicitly selected assignments after separate human launch approval. Default mode is brief-only. Use after review-plan and human approval when a plan or prompt pack may require multiple agents, phases, branches, or careful sequencing.
 ---
 
 # Dispatch Wave
 
 Use this after `shape-work` → `review-plan` → human approval, and before
-implementation, when work may need more than one agent, branch, PR, or session.
+implementation, when work may need one or more agents, branches, PRs, or
+sessions.
 
 If the current project ships its own `dispatch-wave` skill (e.g. in
 `.claude/skills/dispatch-wave/`), prefer it — it carries repo-specific
 operational rules and the project's agent preamble.
 
-Brief-only mode is the only supported mode. This skill prepares the wave; it
-does not launch it. Launching belongs to the project's orchestrator skill
-(e.g. sprint-orchestrator) or a direct prompt paste for single assignments.
+Default mode is `brief`: prepare or update the manifest and stop.
+
+Launch mode is explicit and separately approval-gated: launch only the
+assignments the human names, from an existing manifest, through the requested
+harness or manual paste. Plan approval means "this work is worth doing";
+launch approval means "start these assignments now." Never infer one from the
+other.
 
 ## Pipeline Position
 
 ```
-shape-work ─► review-plan ─► human approval ─► dispatch-wave ─► orchestrator ─► agents
-                             (status: approved)  (this skill)
+shape-work ─► review-plan ─► human approval ─► dispatch-wave brief ─► human launch approval ─► dispatch-wave launch ─► agents
+                             (status: approved)  (manifest)             (assignment selection)      (explicit mode)
 ```
 
 ## Inputs
 
+Brief mode:
+
 - Plan path (required).
-- The companion artifacts the plan's tier produced (scorecard, prompt pack)
-  when they exist — do not demand artifacts the tier never called for, but a
+- Companion artifacts the plan's tier produced (scorecard, prompt pack) when
+  they exist. Do not demand artifacts the tier never called for, but a
   multi-agent wave without a prompt pack is almost certainly `NOT_READY`.
 - Optional maximum number of agents, branch naming pattern, or target output
   path.
 
+Launch mode:
+
+- Dispatch manifest path (required).
+- Assignment name(s) or `all-ready` (required).
+- Harness: `manual-paste`, `codex`, `claude-code`, `cursor`, or a repo-specific
+  orchestrator skill (required).
+- Optional dry-run flag. If unsure, dry-run.
+
 ## Non-Goals
 
-Do not:
+In all modes, do not:
 
-- create feature branches or implementation worktrees
-- start background agents or threads
-- open PRs or merge anything
-- install tools or dependencies
-- begin any implementation work
+- merge anything
+- deliver to a customer or external stakeholder
+- install tools or dependencies unless the user explicitly approves
+- launch assignments that are not `READY`
+- launch assignments not named by the user
 
 **One persistence exception:** the dispatch manifest itself is a planning
 artifact and MUST be committed to the durable branch (usually `main`) and
 pushed — via a throwaway worktree if you are on a feature branch, never a
 stash. An uncommitted manifest stranded on a branch is a failed run.
 
-## Workflow
+## Mode Selection
+
+- If the user asks to "dispatch", "prepare", "brief", "make a manifest", or
+  supplies plan/scorecard/prompt paths, run **brief mode**.
+- If the user asks to "launch", "start agents", "run assignment X", or supplies
+  a dispatch manifest plus assignment selection, run **launch mode**.
+- If launch intent is ambiguous, run brief mode or ask for explicit launch
+  approval.
+
+## Brief Workflow
 
 1. Orient: read `AGENTS.md` (and `CLAUDE.md` if present), run
    `git status --short --branch`, read the plan and companion artifacts.
@@ -90,8 +114,48 @@ stash. An uncommitted manifest stranded on a branch is a failed run.
    exists), then commit and push it; verify the commit is on the remote.
 10. Report: manifest path + commit SHA, execution shape, ready/not-ready
     assignments, overlap and dependency risks, human decisions needed, and
-    the launch handoff (orchestrator skill for multi-agent, direct paste for
-    `NO_WAVE`).
+    the launch options. Stop before launch unless the user explicitly asked
+    for launch mode in the same request and supplied assignment selection.
+
+## Launch Workflow
+
+Launch mode starts only after brief mode produced a manifest and a human
+explicitly selected what to launch.
+
+1. Orient:
+   - Read `AGENTS.md` and the dispatch manifest.
+   - Run `git status --short --branch`.
+   - Confirm the requested harness: `manual-paste`, `codex`, `claude-code`,
+     `cursor`, or repo-specific orchestrator.
+2. Validate launch gate:
+   - Manifest approval gate passed.
+   - Selected assignments exist and are `READY`.
+   - No selected assignment has unresolved overlap/dependency blockers.
+   - Each selected assignment has branch/session label, scope, tests/checks,
+     exit condition, and verify-by.
+   - Human selected the assignments in this turn or in a clearly referenced
+     approval message. Do not rely on plan approval alone.
+3. Decide launch action:
+   - `manual-paste`: print the exact prompts and stop.
+   - `codex`, `claude-code`, `cursor`: if a callable thread/subagent/harness
+     tool is available, use it only after confirming selected assignments and
+     reporting the launch plan; otherwise print exact prompts plus launch
+     instructions and stop.
+   - repo-specific orchestrator: hand off to that skill/tool if available;
+     otherwise print the command/prompt to run it.
+4. Record launch status in the manifest or a follow-up handoff when the repo's
+   planning policy allows it:
+   - selected assignments
+   - launch mode/harness
+   - launched session/thread/branch labels or manual-paste output
+   - supervisor verify-by commands
+   - any assignments skipped and why
+5. Report:
+   - assignments launched or prepared
+   - harness used
+   - prompts/session labels
+   - supervisor verification commands
+   - anything not launched and why
 
 ## Readiness Rules
 
@@ -111,6 +175,8 @@ launching it.
 
 ## Output Summary
 
+Brief mode:
+
 ```text
 Dispatch wave brief complete.
   Manifest: <path>  (commit <sha>, verified on remote)
@@ -123,4 +189,17 @@ Dispatch wave brief complete.
 
 To launch: <orchestrator skill> with this manifest
            (or paste assignment 1's prompt directly if NO_WAVE)
+```
+
+Launch mode:
+
+```text
+Dispatch wave launch complete.
+  Manifest: <path>
+  Requested assignments: <names>
+  Harness: manual-paste | codex | claude-code | cursor | <orchestrator>
+  Launched/prepared: <N>
+  Skipped: <N> — <reasons>
+  Supervisor verify-by:
+    - <assignment>: <command or URL>
 ```

@@ -32,7 +32,7 @@ Use `thoughts/shared/` for durable planning and learning artifacts:
 For important work, prefer this sequence:
 
 ```text
-research -> plan -> scorecard -> prompt pack -> plan review -> human approval -> dispatch manifest -> implementation -> retro
+research -> plan -> scorecard -> prompt pack -> plan review -> human approval -> dispatch manifest -> launch approval -> implementation -> retro
 ```
 
 ## Required Shipping Workflow
@@ -54,7 +54,8 @@ For parallel work:
 
 - Use `review-plan` before dispatching shaped work.
 - Require human approval before `dispatch-wave`.
-- Use `dispatch-wave` in brief-only mode before launching multiple agents.
+- Use `dispatch-wave` brief mode before launching multiple agents.
+- Require explicit human launch approval before `dispatch-wave` launch mode.
 - Use one branch or worktree per agent.
 - Assign one objective and one scorecard per agent.
 - Avoid overlapping files unless the plan explicitly says the work is stacked.

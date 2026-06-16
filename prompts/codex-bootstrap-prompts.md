@@ -108,7 +108,7 @@ Report:
 - next human approval step
 ```
 
-## Prompt 5: Dispatch A Brief-Only Wave
+## Prompt 5: Dispatch A Brief
 
 ```text
 Use the dispatch-wave skill in brief-only mode.
@@ -149,7 +149,42 @@ Report:
 - human decisions needed
 ```
 
-## Prompt 6: Implement One Phase
+## Prompt 6: Launch Selected Assignments
+
+```text
+Use the dispatch-wave skill in launch mode.
+
+Manifest:
+- <path>
+
+Launch selection:
+- Assignments: <assignment name(s), or all-ready>
+- Harness: manual-paste | codex | claude-code | cursor | <repo-specific orchestrator>
+- Dry run first: yes
+
+Goal:
+Prepare or launch only the selected READY assignments from the existing
+dispatch manifest.
+
+Constraints:
+- Plan approval is not launch approval. Treat this prompt as launch approval
+  only for the selected assignments above.
+- Do not launch assignments marked NOT_READY.
+- Do not launch assignments with unresolved overlap/dependency blockers.
+- Do not create branches, worktrees, remote threads, or PRs unless the selected
+  harness explicitly requires it and you have the necessary tool available.
+- Never merge or deliver.
+- If the harness is unavailable, print exact launch prompts and stop.
+
+Report:
+- assignments launched or prepared
+- harness used
+- prompts/session labels
+- skipped assignments and reasons
+- supervisor verify-by commands
+```
+
+## Prompt 7: Implement One Phase
 
 ```text
 Read AGENTS.md and the following artifacts:
@@ -179,7 +214,7 @@ Report:
 - remaining risks
 ```
 
-## Prompt 7: Review A PR Or Diff
+## Prompt 8: Review A PR Or Diff
 
 ```text
 Use the review-pr skill.
@@ -200,7 +235,7 @@ Fix blocking issues if they are in scope. Report non-blocking issues with a
 recommendation. Do not merge.
 ```
 
-## Prompt 8: Retro After Delivery
+## Prompt 9: Retro After Delivery
 
 ```text
 Use the retro-pr skill.
