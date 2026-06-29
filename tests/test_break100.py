@@ -59,7 +59,6 @@ class LoadBenchmarksTests(unittest.TestCase):
         self.assertEqual({r["category"] for r in rows}, set(break100.CATEGORIES))
 
     def test_missing_required_column_raises(self):
-        bad = VALID.replace(",target_15", "")  # drop a value column header + nothing else
         path = write_csv("category,you_25,target_20,source\noff_the_tee,-4.2,-3.4,src\n")
         self.addCleanup(os.remove, path)
         with self.assertRaises(ValueError):

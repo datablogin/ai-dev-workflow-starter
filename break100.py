@@ -15,19 +15,20 @@ Usage:
 import csv
 import sys
 
-CATEGORIES = ("off_the_tee", "approach", "short_game", "putting")
-
-# CSV columns holding strokes-gained-vs-tour values (negative numbers).
-VALUE_COLUMNS = ("you_25", "target_20", "target_15")
-REQUIRED_COLUMNS = ("category",) + VALUE_COLUMNS + ("source",)
-
-# Human-readable labels for output.
+# Display labels keyed by category. This dict is the single source of truth for
+# which categories are valid and the order they print in.
 CATEGORY_LABELS = {
     "off_the_tee": "Off the tee",
     "approach": "Approach",
     "short_game": "Short game",
     "putting": "Putting",
 }
+CATEGORIES = tuple(CATEGORY_LABELS)
+
+# CSV columns holding strokes-gained-vs-tour values (negative numbers).
+VALUE_COLUMNS = ("you_25", "target_20", "target_15")
+REQUIRED_COLUMNS = ("category",) + VALUE_COLUMNS + ("source",)
+
 TARGETS = (
     ("target_20", "20-handicap (just break 100)"),
     ("target_15", "15-handicap (stretch)"),
@@ -104,14 +105,14 @@ def render(rows):
     lines = ["Break 100 - strokes-gained gap diagnosis", ""]
     for target_key, label in TARGETS:
         gaps = gaps_for_tier(rows, target_key)
-        top_cat, _ = biggest_gap(rows, target_key)
+        ordered = sorted(gaps, key=gaps.get, reverse=True)  # largest gap first
+        top_cat = ordered[0]
         lines.append("Target: %s" % label)
         lines.append("  %-12s %s" % ("category", "strokes saveable"))
-        # Show categories largest-gap first.
-        for cat in sorted(gaps, key=gaps.get, reverse=True):
+        for cat in ordered:
             marker = "  <- highest leverage" if cat == top_cat else ""
             lines.append("  %-12s %+5.1f%s" % (CATEGORY_LABELS[cat], gaps[cat], marker))
-        lines.append("  %-12s %+5.1f" % ("TOTAL", total_gap(rows, target_key)))
+        lines.append("  %-12s %+5.1f" % ("TOTAL", sum(gaps.values())))
         lines.append("")
     lines.append(
         "Descriptive, not causal: benchmarks are population averages by "
