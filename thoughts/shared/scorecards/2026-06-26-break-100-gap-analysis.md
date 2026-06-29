@@ -46,7 +46,9 @@ tags: [golf, break-100, scorecard]
 ## Regression Risks
 
 - Mixing category definitions across sources -> miscomputed/mislabeled gaps.
-  Mitigation: single source (Shot Scope) for the headline CSV.
+  Mitigation: single source for the headline CSV (Golfity/Broadie table vs Tour
+  baseline; Shot Scope's exact numbers were not machine-extractable this
+  session — see data/SOURCES.md).
 - Sign/direction confusion in the gap (who minus whom). Mitigation: explicit
   convention (positive = strokes saveable) plus a unit test asserting it.
 
@@ -54,7 +56,7 @@ tags: [golf, break-100, scorecard]
 
 | Field | Result |
 |---|---|
-| Delivered artifact or PR | <pending> |
-| Checks | <pending> |
-| Remaining risks | <pending> |
-| Human approval | pending |
+| Delivered artifact or PR | Local only (no PR by choice). Branch `break-100-gap-analysis`: `break100.py`, `data/benchmarks.csv`, `data/SOURCES.md`, `tests/test_break100.py`, findings report `thoughts/shared/research/2026-06-28-break-100-findings.md`. 6 commits, `main` untouched. |
+| Checks | All 11 unit tests pass (`python3 -m unittest discover -s tests`). Tool runs: `python3 break100.py data/benchmarks.csv`. `/simplify` (4-angle) applied, no behavior change. |
+| Remaining risks | Headline data is Golfity/Broadie, not Shot Scope as originally intended (documented update path in data/SOURCES.md). Benchmarks are population averages, not the user's own game (descriptive, not causal). |
+| Human approval | Pending — local review only; user chose not to push/open a PR. |
